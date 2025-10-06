@@ -1,0 +1,661 @@
+<!DOCTYPE HTML>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YEUANHTHU 💖</title>
+
+  <style>
+    
+    html, body {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    canvas {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    h1 {
+      color: #FFC0CB;
+      text-align: center;
+      position: absolute;
+      top: 20px;
+      width: 90%;
+      font-size: 2vw;
+      line-height: 1.3;
+      font-family: 'Times New Roman', Times, serif;
+      animation: animate 5s infinite;
+      z-index: 3;
+      text-shadow: 0 0 15px #FF66CC;
+    }
+
+    #pinkboard {
+      position: relative;
+      margin: auto;
+      height: 45vmin;
+      width: 45vmin;
+      animation: animate 5s infinite;
+      z-index: 2;
+    }
+
+    #stars, #fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #fireworks { z-index: 0; }
+
+    .floating-text {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #FFC0CB;
+      font-size: 2vw;
+      font-family: 'Times New Roman', serif;
+      animation: floatUp 4s ease-out forwards;
+      z-index: 5;
+      text-shadow: 0 0 15px #FF66CC;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translate(-50%, 30px); }
+      20% { opacity: 1; }
+      80% { opacity: 1; transform: translate(-50%, -100px); }
+      100% { opacity: 0; transform: translate(-50%, -150px); }
+    }
+
+    @keyframes animate {
+      0% { transform: scale(1); }
+      30% { transform: scale(0.95); }
+      60% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* 🌸 Ảnh hai bên */
+    .side-image {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 35vw;
+      max-width: 250px;
+      opacity: 0.9;
+      z-index: 4;
+      animation: gentlePulse 2s infinite ease-in-out;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .side-image.left { left: 10vw; }
+    .side-image.right { right: 10vw; }
+
+    .side-image:hover {
+      transform: translateY(-50%) scale(1.05);
+      opacity: 1;
+    }
+
+    @keyframes gentlePulse {
+      0%   { transform: translateY(-50%) scale(1); opacity: 0.9; }
+      50%  { transform: translateY(-50%) scale(1.03); opacity: 1; }
+      100% { transform: translateY(-50%) scale(1); opacity: 0.9; }
+    }
+
+
+    /* 🌸 Icon bay */
+    .floating-icon, .falling-icon {
+      position: absolute;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .floating-icon {
+      font-size: 2vw;
+      animation: floatIcon 10s linear infinite;
+    }
+
+    .falling-icon {
+      font-size: 2vw;
+      animation: fallIcon 6s linear infinite;
+    }
+
+    @keyframes floatIcon {
+      0% { transform: translate(0,0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translate(50px,-300px) rotate(360deg); opacity: 0; }
+    }
+
+    @keyframes fallIcon {
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(700px) rotate(360deg); opacity: 0; }
+    }
+    /* 📱 MOBILE RESPONSIVENESS ADJUSTMENTS */
+@media (max-width: 768px) {
+  
+  body {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto; /* Cho phép cuộn nhẹ */
+  }
+
+  h1 {
+    font-size: 5.2vw;
+    top: 4vh;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  #pinkboard {
+    height: 50vmin;   /* nhỏ hơn để vừa khung */
+    width: 50vmin;
+    margin-top: 18vh; /* cách chữ vừa đẹp */
+    display: block;
+  }
+
+  .side-image {
+    width: 28vw;
+    opacity: 0.85;
+    top: 65%;
+  }
+
+  #musicToggle {
+    bottom: 45px;
+    right: 15px;
+  }
+
+  .floating-text {
+    font-size: 3.5vw;
+    bottom: 50px;
+  }
+
+  .floating-icon {
+    font-size: 8vw;
+  }
+
+  .falling-icon {
+    font-size: 7vw;
+  }
+
+  .side-image {
+    width: 28vw;
+    opacity: 0.8;
+  }
+
+  .side-image.left {
+    left: 5vw;
+    top: 60%;
+  }
+
+  .side-image.right {
+    right: 5vw;
+    top: 60%;
+  }
+
+  #musicToggle {
+  position: absolute;
+  top: 40%;              /* cùng tầm cao với trái tim */
+  right: 8%;            /* mé phải trái tim */
+  transform: translateY(-50%);
+  font-size: 1rem;
+  padding: 6px 12px;
+  z-index: 10;           /* đảm bảo nằm trên trái tim */
+}
+
+}
+
+/* 📱 Cho màn nhỏ hơn 480px */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 5vw;
+    top: 3vh;
+  }
+
+  #pinkboard {
+    height: 45vmin;
+    width: 45vmin;
+    margin-top: 30vh; /* Đảm bảo trái tim không bị che */
+  }
+
+  .side-image {
+    width: 30vw;
+    opacity: 0.75;
+  }
+
+  .side-image.left { left: 3vw; top: 65%; }
+  .side-image.right { right: 3vw; top: 65%; }
+
+  #musicToggle {
+    bottom: 20px;
+    right: 15px;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <img src="trai1.jpg" class="side-image left" />
+  <img src="phai.jpg" class="side-image right" />
+
+  <canvas id="fireworks"></canvas>
+  <canvas id="stars"></canvas>
+
+  <h1>
+    Chúc em trung thu vui vẻ 💖<br>
+    Iu em nhìu nhìu nhaa 💕
+  </h1>
+
+  <div class="box">
+    <canvas id="pinkboard"></canvas>
+  </div>
+
+  <!-- 🌸 Icon bay -->
+  <script>
+    const icons = ["💖", "🌸", "🐥", "💞", "🐷"];
+    function createFloatingIcon() {
+      const icon = document.createElement("div");
+      icon.className = "floating-icon";
+      icon.innerText = icons[Math.floor(Math.random() * icons.length)];
+      icon.style.left = Math.random() * (window.innerWidth - 50) + "px";
+      icon.style.top = window.innerHeight + "px";
+      document.body.appendChild(icon);
+      setTimeout(() => icon.remove(), 6000);
+    }
+    setInterval(createFloatingIcon, 1000);
+  </script>
+
+  <!-- 🌟 Sao và trái tim, pháo hoa -->
+  <!-- (giữ nguyên toàn bộ script gốc của bạn, không cần thay đổi, vì chỉ là hiệu ứng canvas) -->
+  <!-- 🌟 Copy lại phần script sao, trái tim, pháo hoa, lời chúc từ bản gốc ở đây -->
+</body>
+</html>
+
+
+  <!-- Nền sao lấp lánh -->
+  <script>
+    const starCanvas = document.getElementById('stars');
+    const starCtx = starCanvas.getContext('2d');
+    let stars = [];
+
+    function resizeStars() {
+      starCanvas.width = window.innerWidth;
+      starCanvas.height = window.innerHeight;
+      stars = [];
+      for (let i = 0; i < 1000; i++) {
+        stars.push({
+          x: Math.random() * starCanvas.width,
+          y: Math.random() * starCanvas.height,
+          radius: Math.random() * 1.5,
+          speed: Math.random() * 0.3 + 0.1,
+          alpha: Math.random()
+        });
+      }
+    }
+
+    function animateStars() {
+      starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+      starCtx.fillStyle = "white";
+      for (let star of stars) {
+        starCtx.globalAlpha = star.alpha;
+        starCtx.beginPath();
+        starCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        starCtx.fill();
+        star.y += star.speed * 0.5;
+        if (star.y > starCanvas.height) {
+          star.y = 0;
+          star.x = Math.random() * starCanvas.width;
+        }
+      }
+      requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener("resize", resizeStars);
+    resizeStars();
+    animateStars();
+  </script>
+
+  <!-- Trái tim hồng -->
+  <script>
+    var settings = {
+      particles: {
+        length: 2000,
+        duration: 2,
+        velocity: 100,
+        effect: -1.3,
+        size: 20,
+      },
+    };
+
+    (function () {
+      var b = 0;
+      var c = ["ms", "moz", "webkit", "o"];
+      for (var a = 0; a < c.length && !window.requestAnimationFrame; ++a) {
+        window.requestAnimationFrame = window[c[a] + "RequestAnimationFrame"];
+        window.cancelAnimationFrame =
+          window[c[a] + "CancelAnimationFrame"] ||
+          window[c[a] + "CancelRequestAnimationFrame"];
+      }
+    })();
+
+    var Point = function (x, y) {
+      this.x = x || 0;
+      this.y = y || 0;
+    };
+    Point.prototype.clone = function () {
+      return new Point(this.x, this.y);
+    };
+    Point.prototype.length = function (length) {
+      if (length === undefined)
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+      this.normalize();
+      this.x *= length;
+      this.y *= length;
+      return this;
+    };
+    Point.prototype.normalize = function () {
+      var length = this.length();
+      this.x /= length;
+      this.y /= length;
+      return this;
+    };
+
+    var Particle = function () {
+      this.position = new Point();
+      this.velocity = new Point();
+      this.acceleration = new Point();
+      this.age = 0;
+    };
+    Particle.prototype.initialize = function (x, y, dx, dy) {
+      this.position.x = x;
+      this.position.y = y;
+      this.velocity.x = dx;
+      this.velocity.y = dy;
+      this.acceleration.x = dx * settings.particles.effect;
+      this.acceleration.y = dy * settings.particles.effect;
+      this.age = 0;
+    };
+    Particle.prototype.update = function (deltaTime) {
+      this.position.x += this.velocity.x * deltaTime;
+      this.position.y += this.velocity.y * deltaTime;
+      this.velocity.x += this.acceleration.x * deltaTime;
+      this.velocity.y += this.acceleration.y * deltaTime;
+      this.age += deltaTime;
+    };
+    Particle.prototype.draw = function (context, image) {
+      function ease(t) {
+        return (--t) * t * t + 1;
+      }
+      var size = image.width * ease(this.age / settings.particles.duration);
+      context.globalAlpha = 1 - this.age / settings.particles.duration;
+      context.drawImage(
+        image,
+        this.position.x - size / 2,
+        this.position.y - size / 2,
+        size,
+        size
+      );
+    };
+
+    var ParticlePool = function (length) {
+      var particles = new Array(length);
+      for (var i = 0; i < particles.length; i++)
+        particles[i] = new Particle();
+      var firstActive = 0, firstFree = 0;
+
+      this.add = function (x, y, dx, dy) {
+        particles[firstFree].initialize(x, y, dx, dy);
+        firstFree = (firstFree + 1) % particles.length;
+      };
+
+      this.update = function (deltaTime) {
+        for (let i = 0; i < particles.length; i++)
+          particles[i].update(deltaTime);
+      };
+
+      this.draw = function (context, image) {
+        for (let i = 0; i < particles.length; i++)
+          particles[i].draw(context, image);
+      };
+    };
+
+    (function (canvas) {
+      var context = canvas.getContext("2d"),
+        particles = new ParticlePool(settings.particles.length),
+        particleRate = settings.particles.length / settings.particles.duration,
+        time;
+
+      function pointOnHeart(t) {
+        return new Point(
+          160 * Math.pow(Math.sin(t), 3),
+          130 * Math.cos(t) -
+            50 * Math.cos(2 * t) -
+            20 * Math.cos(3 * t) -
+            10 * Math.cos(4 * t) +
+            25
+        );
+      }
+
+      var image = (function () {
+        var canvas = document.createElement("canvas"),
+          context = canvas.getContext("2d");
+        canvas.width = settings.particles.size;
+        canvas.height = settings.particles.size;
+        function to(t) {
+          var point = pointOnHeart(t);
+          point.x =
+            settings.particles.size / 2 +
+            (point.x * settings.particles.size) / 350;
+          point.y =
+            settings.particles.size / 2 -
+            (point.y * settings.particles.size) / 350;
+          return point;
+        }
+        context.beginPath();
+        var t = -Math.PI;
+        var point = to(t);
+        context.moveTo(point.x, point.y);
+        while (t < Math.PI) {
+          t += 0.01;
+          point = to(t);
+          context.lineTo(point.x, point.y);
+        }
+        context.closePath();
+        context.fillStyle = "#FF5CA4";
+        context.fill();
+        var image = new Image();
+        image.src = canvas.toDataURL();
+        return image;
+      })();
+
+      function render() {
+        requestAnimationFrame(render);
+        var newTime = new Date().getTime() / 1000,
+          deltaTime = newTime - (time || newTime);
+        time = newTime;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        var amount = particleRate * deltaTime;
+        for (var i = 0; i < amount; i++) {
+          var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+          var dir = pos.clone().length(settings.particles.velocity);
+          particles.add(
+            canvas.width / 2 + pos.x,
+            canvas.height / 2 - pos.y,
+            dir.x,
+            -dir.y
+          );
+        }
+        particles.update(deltaTime);
+        particles.draw(context, image);
+      }
+
+    function onResize() {
+  // Sửa để trái tim luôn hiển thị trọn trên mọi thiết bị
+  canvas.width = window.innerWidth * 1;
+  canvas.height = window.innerHeight * 1;
+
+  // Căn giữa trên màn hình
+  canvas.style.display = "block";
+  canvas.style.margin = "0 auto";
+}
+
+      window.onresize = onResize;
+      setTimeout(function () {
+        onResize();
+        render();
+      }, 10);
+    })(document.getElementById("pinkboard"));
+    
+  </script>
+
+  <!-- Pháo hoa trắng hiện đại -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('fireworks'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.position.z = 5;
+
+    const fireworks = [];
+    function createFirework() {
+      const group = new THREE.Group();
+      const color = 0xffffff;
+      for (let i = 0; i < 120; i++) {
+        const geometry = new THREE.SphereGeometry(0.02, 8, 8);
+        const material = new THREE.MeshBasicMaterial({ color });
+        const particle = new THREE.Mesh(geometry, material);
+        const speed = Math.random() * 0.08 + 0.02;
+        const direction = new THREE.Vector3(
+          (Math.random() - 0.5) * 2,
+          (Math.random() - 0.5) * 2,
+          (Math.random() - 0.5) * 2
+        ).normalize().multiplyScalar(speed);
+        particle.userData = { direction, life: 0 };
+        group.add(particle);
+      }
+      group.position.set(
+        (Math.random() - 0.5) * 8,
+        (Math.random() - 0.5) * 5,
+        0
+      );
+      scene.add(group);
+      fireworks.push(group);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      fireworks.forEach((group, index) => {
+        group.children.forEach(particle => {
+          particle.position.add(particle.userData.direction);
+          particle.userData.life += 0.01;
+          particle.material.opacity = Math.max(1 - particle.userData.life, 0);
+          particle.material.transparent = true;
+        });
+        if (group.children.every(p => p.userData.life > 1.2)) {
+          scene.remove(group);
+          fireworks.splice(index, 1);
+        }
+      });
+      renderer.render(scene, camera);
+    }
+
+    setInterval(createFirework, 1200);
+    animate();
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+
+  <!-- 🌸 Lời chúc bay lên -->
+  <script>
+    const messages = [
+      "Chúc em dui dẻ hạnh phúc 💞",
+      "Trung thu này có anh ở đây dòi 🎑",
+      "Anh Thư Trẻ Trâu🌙",
+      "Yêu em nhìu nhìu 💗",
+      "Cười Nhiều Lên Nha Emmmm 💕"
+    ];
+
+    function createFloatingText() {
+      const text = document.createElement("div");
+      text.className = "floating-text";
+      text.innerText = messages[Math.floor(Math.random() * messages.length)];
+      text.style.bottom = "100px";
+      document.body.appendChild(text);
+      setTimeout(() => text.remove(), 4000);
+    }
+
+    setInterval(createFloatingText, 2500);
+  </script>
+  <!-- 🎵 Nhạc nền có nút bật / tắt -->
+<audio id="bgMusic" loop>
+  <source src="nhac.mp3" type="audio/mpeg">
+  Trình duyệt của bạn không hỗ trợ phát nhạc.
+</audio>
+
+<button id="musicToggle">🔇 Bật nhạc</button>
+
+<style>
+  #musicToggle {
+    position: fixed;
+    bottom: 900px;
+    right: 20px;
+    background: rgba(255, 105, 180, 0.85);
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    color: white;
+    font-weight: 600;
+    text-shadow: 0 0 5px #ffb6c1;
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 9999;
+  }
+
+  #musicToggle:hover {
+    background: rgba(255, 182, 193, 1);
+    transform: scale(1.05);
+  }
+</style>
+
+<script>
+  const bgMusic = document.getElementById("bgMusic");
+  const musicToggle = document.getElementById("musicToggle");
+  let isPlaying = false;
+
+  musicToggle.addEventListener("click", () => {
+    if (!isPlaying) {
+      bgMusic.play();
+      musicToggle.textContent = "🔊 Tắt nhạc";
+      isPlaying = true;
+    } else {
+      bgMusic.pause();
+      musicToggle.textContent = "🔇 Bật nhạc";
+      isPlaying = false;
+    }
+  });
+</script>
+
+</BODY>
+</HTML>
